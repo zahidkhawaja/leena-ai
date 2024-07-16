@@ -48,7 +48,7 @@ export default function Home() {
   };
 
   return (
-    <div className="flex flex-col h-screen bg-gradient-to-b from-blue-50 to-green-50">
+    <div className="flex flex-col min-h-screen h-[100dvh] bg-gradient-to-b from-blue-50 to-green-50">
       <Head>
         <title>Leena - Navigate Life's Complexities</title>
       </Head>
@@ -73,7 +73,7 @@ export default function Home() {
           </svg>
         </button>
       </header>
-      <main className="flex-1 overflow-y-auto p-4 sm:p-6 max-w-3xl mx-auto w-full pb-20">
+      <main className="flex-1 overflow-y-auto p-4 sm:p-6 max-w-3xl mx-auto w-full">
         {messages.length === 0 ? (
           <div className="flex flex-col items-center justify-center h-5/6 text-gray-500">
             <Image
@@ -152,8 +152,8 @@ export default function Home() {
         </div>
       )}
 
-      <footer className="p-4 max-w-3xl mx-auto w-full fixed bottom-0 left-0 right-0">
-        <form onSubmit={handleSendMessage} className="flex space-x-2 bg-white rounded-2xl shadow-lg p-2">
+      <footer className="p-4 max-w-3xl mx-auto w-full">
+        <form onSubmit={handleSendMessage} className="flex space-x-2 bg-white bg-opacity-80 backdrop-blur-sm rounded-2xl shadow-lg p-2">
           <input
             type="text"
             value={inputMessage}
