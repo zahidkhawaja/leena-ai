@@ -10,7 +10,7 @@
 .typing-indicator span {
     height: 8px;
     width: 8px;
-    margin: 0 1px;
+    margin: 1px;
     background-color: #6b7280;
     display: block;
     border-radius: 50%;
