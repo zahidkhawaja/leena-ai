@@ -118,7 +118,7 @@ export default function Home() {
       </main>
 
       {showFAQ && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
           <div className="bg-white rounded-lg p-6 max-w-lg w-full">
             <h2 className="text-2xl font-bold mb-4">Frequently Asked Questions</h2>
             <ul className="space-y-4">
@@ -162,7 +162,7 @@ export default function Home() {
             Send
           </button>
         </form>
-        <p className="text-xs text-gray-400 text-center mt-4">Leena is helpful, but not a substitute for professional mental health care.</p>
+        <p className="text-xs text-gray-400 text-center mt-4">Leena is not a substitute for professional mental health care.</p>
 
       </footer>
 
