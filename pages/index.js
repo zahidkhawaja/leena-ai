@@ -50,7 +50,7 @@ export default function Home() {
   return (
     <div className="flex flex-col h-screen bg-gradient-to-b from-blue-50 to-green-50">
       <Head>
-        <title>Leena - AI Therapy for the South Asian Community</title>
+        <title>Leena - Therapy for South Asians</title>
       </Head>
       <header className="bg-white shadow-sm p-4 flex items-center justify-between">
         <div className="flex items-center">
@@ -163,13 +163,15 @@ export default function Home() {
           />
           <button
             type="submit"
-            className="bg-blue-500 text-white rounded-full px-6 py-3 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300 focus:ring-opacity-50"
+            className="bg-blue-500 text-white rounded-full p-3 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300 focus:ring-opacity-50"
+            aria-label="Send message"
           >
-            Send
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+            </svg>
           </button>
         </form>
         <p className="text-xs text-gray-400 text-center mt-4">Leena is not a substitute for professional mental health care.</p>
-
       </footer>
 
     </div>
