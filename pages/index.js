@@ -83,6 +83,12 @@ export default function Home() {
               height={200}
             />
             <p className="mt-4 text-lg">Hey, it's Leena! What's on your mind? 👋</p>
+            <button
+              onClick={() => setShowFAQ(true)}
+              className="mt-4 text-xs text-blue-500 hover:text-blue-600 focus:outline-none transition-colors duration-200 relative"
+            >
+              Learn More
+            </button>
           </div>
         ) : (
           <div className="space-y-4">
