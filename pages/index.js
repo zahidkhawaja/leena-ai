@@ -48,7 +48,7 @@ export default function Home() {
   };
 
   return (
-    <div className="flex flex-col min-h-screen h-[100dvh] bg-gradient-to-b from-blue-50 to-green-50">
+    <div className="flex flex-col h-screen max-h-[100dvh] bg-gradient-to-b from-blue-50 to-green-50">
       <Head>
         <title>Leena - Navigate Life's Complexities</title>
       </Head>
