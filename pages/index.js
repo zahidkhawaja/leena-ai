@@ -50,7 +50,7 @@ export default function Home() {
   return (
     <div className="flex flex-col h-screen bg-gradient-to-b from-blue-50 to-green-50">
       <Head>
-        <title>Leena - Therapy for South Asians</title>
+        <title>Leena - Navigate Life's Complexities</title>
       </Head>
       <header className="bg-white shadow-sm p-4 flex items-center justify-between">
         <div className="flex items-center">
@@ -152,7 +152,8 @@ export default function Home() {
         </div>
       )}
 
-      <footer className="p-4 max-w-3xl mx-auto w-full">
+      {/* <footer className="p-4 max-w-3xl mx-auto w-full"> */}
+      <footer className="p-4 max-w-3xl mx-auto w-full fixed bottom-0 left-0 right-0 pt-8">
         <form onSubmit={handleSendMessage} className="flex space-x-2 bg-white bg-opacity-80 backdrop-blur-sm rounded-2xl shadow-lg p-2">
           <input
             type="text"
