@@ -2,32 +2,35 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+.typing-indicator {
+    display: flex;
+    align-items: center;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+.typing-indicator span {
+    height: 8px;
+    width: 8px;
+    margin: 0 1px;
+    background-color: #6b7280;
+    display: block;
+    border-radius: 50%;
+    opacity: 0.4;
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+@keyframes blink {
+    50% {
+        opacity: 1;
+    }
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+.typing-indicator span:nth-child(1) {
+    animation: blink 1s infinite 0.3333s;
+}
+
+.typing-indicator span:nth-child(2) {
+    animation: blink 1s infinite 0.6666s;
+}
+
+.typing-indicator span:nth-child(3) {
+    animation: blink 1s infinite 0.9999s;
 }
