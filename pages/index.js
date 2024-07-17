@@ -153,7 +153,7 @@ export default function Home() {
       )}
 
       <footer className="p-4 max-w-3xl mx-auto w-full">
-        <form onSubmit={handleSendMessage} className="flex space-x-2 bg-white bg-opacity-80 backdrop-blur-sm rounded-2xl shadow-lg p-2">
+        <form onSubmit={handleSendMessage} className="flex space-x-2 bg-white bg-opacity-30 backdrop-blur-sm rounded-2xl shadow-lg p-2">
           <input
             type="text"
             value={inputMessage}
