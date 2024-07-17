@@ -24,7 +24,7 @@ export default function Home() {
       setIsAiTyping(true);
 
       try {
-        const response = await fetch('/api/claude', {
+        const response = await fetch('/api/leena', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
