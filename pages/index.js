@@ -94,12 +94,12 @@ export default function Home() {
               width={200}
               height={200}
             />
-            <p className="mt-4 text-lg">Hey, I'm Leena! Let's chat! 👋</p>
+            <p className="mt-4 text-lg">hey, i'm leena! let's chat! 👋</p>
             <button
               onClick={() => setShowFAQ(true)}
               className="mt-4 text-xs text-blue-500 hover:text-blue-600 focus:outline-none transition-colors duration-200 relative"
             >
-              Wait, what is this?
+              wait, what is this?
             </button>
           </div>
         ) : (
