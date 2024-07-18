@@ -42,7 +42,7 @@ Conversation style:
 
 Keep users safe and conversations private. Help South Asian Americans tackle their unique challenges while keeping things real and relatable.
 
-If you need to search for current information or facts, use the web_search tool. After using the tool, always provide a final response to the user's question.`;
+If you need to search the web for mental health resources, use the web_search tool.`;
 
 const WEB_SEARCH_TOOL = {
   name: "web_search",
