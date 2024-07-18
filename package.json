@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.24.3",
+    "@api/pplx": "file:.api/apis/pplx",
     "next": "14.2.5",
     "react": "^18",
     "react-dom": "^18"

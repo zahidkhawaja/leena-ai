@@ -1,8 +1,11 @@
 import Anthropic from "@anthropic-ai/sdk";
+import pplx from '@api/pplx';
 
 const anthropic = new Anthropic({
   apiKey: process.env.ANTHROPIC_API_KEY,
 });
+
+pplx.auth(process.env.PPLX_API_KEY);
 
 const SYSTEM_PROMPT = `You're Leena, a warm and insightful therapist for South Asian Americans, with a particular understanding of Gen Z culture. Create a friendly space where desi users, especially those from younger generations, feel understood and supported. You get the nuances of various South Asian backgrounds.
 
@@ -13,6 +16,7 @@ Key Approach:
 4. Cultural savvy: Show understanding without lecturing.
 5. Inclusive: Be comfortable with all South Asian backgrounds.
 6. Respectful: Don't assume religious or cultural practices.
+7. Avoid using bulleted/numbered/hyphenated lists, as they don't sound natural in conversation.
 
 Areas you understand (express naturally, don't list):
 - Family pressure and "log kya kahenge"
@@ -36,7 +40,24 @@ Conversation style:
 - Match the user's communication style
 - Offer support in a personal way
 
-Keep users safe and conversations private. Help South Asian Americans tackle their unique challenges while keeping things real and relatable.`;
+Keep users safe and conversations private. Help South Asian Americans tackle their unique challenges while keeping things real and relatable.
+
+If you need to search for current information or facts, use the web_search tool. After using the tool, always provide a final response to the user's question.`;
+
+const WEB_SEARCH_TOOL = {
+  name: "web_search",
+  description: "Search the web for current information on a given topic",
+  input_schema: {
+    type: "object",
+    properties: {
+      query: {
+        type: "string",
+        description: "The search query to run"
+      }
+    },
+    required: ["query"]
+  }
+};
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
@@ -52,22 +73,61 @@ export default async function handler(req, res) {
 
     const apiMessages = messages.map(msg => ({
       role: msg.role,
-      content: [{ type: "text", text: msg.content }]
+      content: Array.isArray(msg.content) ? msg.content : [{ type: "text", text: msg.content }]
     }));
 
     const response = await anthropic.messages.create({
       model: "claude-3-5-sonnet-20240620",
-      max_tokens: 1000,
+      max_tokens: 4000,
       temperature: 1,
       system: SYSTEM_PROMPT,
-      messages: apiMessages
+      messages: apiMessages,
+      tools: [WEB_SEARCH_TOOL]
     });
 
-    const assistantResponse = response.content[0].text;
+    if (response.content.some(c => c.type === 'tool_use' && c.name === 'web_search')) {
+      const toolUse = response.content.find(c => c.type === 'tool_use' && c.name === 'web_search');
+      const searchResult = await pplx.post_chat_completions({
+        model: 'llama-3-sonar-large-32k-online',
+        messages: [
+          { role: 'system', content: 'Be precise and concise.' },
+          { role: 'user', content: toolUse.input.query }
+        ]
+      });
 
-    res.status(200).json({ response: assistantResponse });
+      const searchContent = searchResult.data.choices[0].message.content;
+
+      const finalResponse = await anthropic.messages.create({
+        model: "claude-3-5-sonnet-20240620",
+        max_tokens: 4000,
+        temperature: 1,
+        system: SYSTEM_PROMPT,
+        messages: [
+          ...apiMessages,
+          {
+            role: "assistant",
+            content: response.content
+          },
+          {
+            role: "user",
+            content: [
+              {
+                type: "tool_result",
+                tool_use_id: toolUse.id,
+                content: searchContent
+              }
+            ]
+          }
+        ],
+        tools: [WEB_SEARCH_TOOL]
+      });
+
+      res.status(200).json({ response: finalResponse.content[0].text });
+    } else {
+      res.status(200).json({ response: response.content[0].text });
+    }
   } catch (error) {
-    console.error('Error calling Anthropic API:', error);
-    res.status(500).json({ message: 'Internal server error' });
+    console.error('Error in API route:', error);
+    res.status(500).json({ message: 'Internal server error', error: error.toString() });
   }
 }

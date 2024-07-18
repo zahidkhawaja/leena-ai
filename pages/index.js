@@ -7,6 +7,7 @@ export default function Home() {
   const [inputMessage, setInputMessage] = useState('');
   const [isAiTyping, setIsAiTyping] = useState(false);
   const [showFAQ, setShowFAQ] = useState(false);
+  const [error, setError] = useState(null);
   const messagesEndRef = useRef(null);
 
   const scrollToBottom = () => {
@@ -22,25 +23,36 @@ export default function Home() {
       setMessages(prevMessages => [...prevMessages, newUserMessage]);
       setInputMessage('');
       setIsAiTyping(true);
+      setError(null);
+
+      const timeoutPromise = new Promise((_, reject) =>
+        setTimeout(() => reject(new Error('Request timed out')), 30000)
+      );
 
       try {
-        const response = await fetch('/api/leena', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ messages: [...messages, newUserMessage] }),
-        });
+        const response = await Promise.race([
+          fetch('/api/leena', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ messages: [...messages, newUserMessage] }),
+          }),
+          timeoutPromise
+        ]);
 
         if (!response.ok) {
-          throw new Error('API response was not ok');
+          throw new Error(`HTTP error! status: ${response.status}`);
         }
 
         const data = await response.json();
+        if (data.error) {
+          throw new Error(data.error);
+        }
         setMessages(prevMessages => [...prevMessages, { role: 'assistant', content: data.response }]);
       } catch (error) {
         console.error('Error calling API:', error);
-        setMessages(prevMessages => [...prevMessages, { role: 'assistant', content: "I'm sorry, I'm having trouble responding right now. Please try again later." }]);
+        setError(`Error: ${error.message}`);
       } finally {
         setIsAiTyping(false);
       }
@@ -82,12 +94,12 @@ export default function Home() {
               width={200}
               height={200}
             />
-            <p className="mt-4 text-lg">hey, i'm leena! let's chat! 👋</p>
+            <p className="mt-4 text-lg">Hey, I'm Leena! Let's chat! 👋</p>
             <button
               onClick={() => setShowFAQ(true)}
               className="mt-4 text-xs text-blue-500 hover:text-blue-600 focus:outline-none transition-colors duration-200 relative"
             >
-              wait, what is this?
+              Wait, what is this?
             </button>
           </div>
         ) : (
@@ -115,6 +127,13 @@ export default function Home() {
                     <span></span>
                     <span></span>
                   </div>
+                </div>
+              </div>
+            )}
+            {error && (
+              <div className="flex justify-center">
+                <div className="bg-red-100 text-red-700 rounded-2xl px-4 py-2 max-w-sm">
+                  {error}
                 </div>
               </div>
             )}
