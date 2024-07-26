@@ -2,6 +2,8 @@
 
 Leena is an AI-powered therapist designed to provide culturally sensitive support and guidance for South Asian Americans, addressing their unique challenges with warmth, understanding, and relatable conversation.
 
+Leena also has the ability to run web searches to find you mental health resources in real-time. This feature allows her to provide up-to-date information on support groups, local therapists, and relevant articles tailored to your specific needs.
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
