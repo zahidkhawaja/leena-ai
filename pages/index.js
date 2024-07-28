@@ -153,7 +153,7 @@ export default function Home() {
               </li>
               <li>
                 <h3 className="font-semibold">How do I use Leena?</h3>
-                <p>Just chat like you're texting a friend! Type whatever's on your mind in the box below. Leena's ready to listen and chat back. Leena also has the ability to run web searches to find you mental health resources in real-time!</p>
+                <p>Just chat like you're texting a friend! Type whatever's on your mind in the box below. Leena also has the ability to run web searches to find you mental health resources in real-time!</p>
               </li>
               <li>
                 <h3 className="font-semibold">Is my conversation with Leena private?</h3>
