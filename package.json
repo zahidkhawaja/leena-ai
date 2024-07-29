@@ -11,6 +11,7 @@
   "dependencies": {
     "@anthropic-ai/sdk": "^0.24.3",
     "@api/pplx": "file:.api/apis/pplx",
+    "@vercel/analytics": "^1.3.1",
     "next": "14.2.5",
     "react": "^18",
     "react-dom": "^18"
